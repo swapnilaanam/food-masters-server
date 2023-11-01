@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
         const result = await newUser.save();
         res.status(201).send(result);
     } catch (error) {
-        res.status(error?.status).send(error?.message);
+        res.send(error?.message);
     }
 });
 

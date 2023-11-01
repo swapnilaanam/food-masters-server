@@ -7,23 +7,18 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    profilepic: {
-        type: String,
-        required: true
-    },
-    password: {
+    profilePic: {
         type: String,
         required: true
     },
     address: {
         type: String,
-        required: true
     },
     city: {
         type: String,
-        required: true
     },
     country: {
         type: String,
