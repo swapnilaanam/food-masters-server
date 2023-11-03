@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000;
 
 const connectDB = require('./db/connectDB');
 const usersRoute = require('./routes/users');
-const restuarantsRoute = require('./routes/restuarants');
+const restaurantsRoute = require('./routes/restaurants');
 
 
 // middleware
@@ -21,7 +21,7 @@ connectDB();
 
 // routes
 app.use('/users', usersRoute);
-app.use('/restuarants', restuarantsRoute);
+app.use('/restaurants', restaurantsRoute);
 
 
 app.get('/', (req, res) => {

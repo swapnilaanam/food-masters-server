@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Restuarant = require('../models/Restuarant');
+const Restaurant = require('../models/Restaurant');
 
 
 router.get('/', async (req, res) => {
     try {
-        const result = await Restuarant.find({});
+        const result = await Restaurant.find({});
         res.status(200).send(result);
     } catch (error) {
         res.status(error?.status).send(error?.message);
@@ -14,15 +14,17 @@ router.get('/', async (req, res) => {
 
 
 router.post('/', async (req, res) => {
-    const restuarantInfo = req.body;
+    const restaurantInfo = req.body;
 
-    const newRestuarant = new Restuarant(restuarantInfo);
+    // console.log(restaurantInfo);
+
+    const newRestaurant = new Restaurant(restaurantInfo);
 
     try {
-        const result = await Restuarant.save();
+        const result = await newRestaurant.save();
         res.status(201).send(result);
     } catch (error) {
-        res.status(error?.status).send(error?.message);
+        res.send(error?.message);
     }
 });
 
