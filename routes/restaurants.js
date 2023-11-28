@@ -12,6 +12,16 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:email', async(req, res) => {
+    const {email} = req.params;
+    try {
+        const result = await Restaurant.findOne({restaurantEmail: email});
+        res.status(200).send(result);
+    } catch (error) {
+        res.send(error?.message);
+    }
+})
+
 
 router.post('/', async (req, res) => {
     const restaurantInfo = req.body;
