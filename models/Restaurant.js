@@ -28,6 +28,17 @@ const restaurantSchema = new mongoose.Schema({
     country: {
         type: String,
         required: true
+    },
+    openingTime: {
+        type: String,
+        required: true
+    },
+    closingTime: {
+        type: String,
+        required: true
+    },
+    tags: {
+        type: Array,
     }
 });
 
