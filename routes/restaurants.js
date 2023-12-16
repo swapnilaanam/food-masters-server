@@ -22,6 +22,17 @@ router.get('/:email', async (req, res) => {
     }
 });
 
+router.get('/restaurant/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await Restaurant.findOne({ _id: id });
+        res.status(200).send(result);
+    } catch (error) {
+        res.send(error?.message);
+    }
+});
+
 
 router.post('/', async (req, res) => {
     const restaurantInfo = req.body;

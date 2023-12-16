@@ -10,7 +10,10 @@ const usersRoute = require('./routes/users');
 const restaurantsRoute = require('./routes/restaurants');
 const categoriesRoute = require('./routes/categories');
 const menusRoute = require('./routes/menus');
-
+const cartsRoute = require('./routes/carts');
+const vouchersRoute = require('./routes/vouchers');
+const ordersRoute = require('./routes/orders');
+const paymentsRoute = require('./routes/payments');
 
 // middleware
 app.use(cors());
@@ -26,6 +29,10 @@ app.use('/users', usersRoute);
 app.use('/restaurants', restaurantsRoute);
 app.use('/categories', categoriesRoute);
 app.use('/menus', menusRoute);
+app.use('/carts', cartsRoute);
+app.use('/vouchers', vouchersRoute);
+app.use('/orders', ordersRoute);
+app.use('/payments', paymentsRoute);
 
 
 app.get('/', (req, res) => {

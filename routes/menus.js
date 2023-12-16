@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Menu = require('../models/Menu');
 
+router.get('/', async(req, res) => {
+    try {
+        const result = await Menu.find({});
+        res.status(200).send(result);
+    } catch (error) {
+        res.send(error?.message);
+    }
+});
+
 router.get('/:email', async(req, res) => {
     const {email} = req.params;
 
