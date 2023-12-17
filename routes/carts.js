@@ -57,6 +57,21 @@ router.post('/:email', async (req, res) => {
                 return res.status(200).send(result2);
             }
             else {
+                if (result.cartItems.length !== 0) {
+                    if (result.cartItems[0].restaurantId !== cartInfo.restaurantId) {
+                        let updatedCartItems = [{ ...cartInfo, quantity: 1 }];
+
+                        const updateDoc = {
+                            $set: {
+                                cartItems: updatedCartItems
+                            }
+                        };
+
+                        const result3 = await Cart.findByIdAndUpdate(result._id, updateDoc);
+                        return res.status(200).send(result3);
+                    }
+                }
+
                 let updatedCartItems = [...result.cartItems, { ...cartInfo, quantity: 1 }];
 
                 const updateDoc = {
