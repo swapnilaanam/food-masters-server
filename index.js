@@ -14,6 +14,7 @@ const cartsRoute = require('./routes/carts');
 const vouchersRoute = require('./routes/vouchers');
 const ordersRoute = require('./routes/orders');
 const paymentsRoute = require('./routes/payments');
+const locationsRoute = require('./routes/locations');
 
 // middleware
 app.use(cors());
@@ -33,7 +34,7 @@ app.use('/carts', cartsRoute);
 app.use('/vouchers', vouchersRoute);
 app.use('/orders', ordersRoute);
 app.use('/payments', paymentsRoute);
-
+app.use('/locations', locationsRoute);
 
 app.get('/', (req, res) => {
     res.send('Food Masters Is Running And Delivering Foods.');

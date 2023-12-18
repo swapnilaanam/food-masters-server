@@ -15,6 +15,7 @@
     "moment": "^2.29.4",
     "mongodb": "^6.2.0",
     "mongoose": "^7.6.3",
+    "opencage-api-client": "^1.0.3",
     "sslcommerz-lts": "^1.1.0"
   }
 }
