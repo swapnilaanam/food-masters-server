@@ -20,6 +20,17 @@ router.get('/:tranId', async (req, res) => {
     }
 });
 
+router.get('/restaurant/:restaurantEmail', async (req, res) => {
+    const { restaurantEmail } = req.params;
+
+    try {
+        const result = await Order.find({ restaurantEmail: restaurantEmail });
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.send(error?.message);
+    }
+});
+
 router.post('/', async (req, res) => {
     const tranId = new ObjectId().toString();
 
