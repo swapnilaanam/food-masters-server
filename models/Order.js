@@ -49,6 +49,11 @@ const orderSchema = new mongoose.Schema({
     transactionId: {
         type: String,
         required: true
+    },
+    deliveryStatus: {
+        type: String,
+        required: true,
+        default: "Pending"
     }
 });
 

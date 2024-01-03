@@ -31,6 +31,17 @@ router.get('/restaurant/:restaurantEmail', async (req, res) => {
     }
 });
 
+router.get('/order/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await Order.findOne({ _id: id });
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.send(error?.message);
+    }
+});
+
 router.post('/', async (req, res) => {
     const tranId = new ObjectId().toString();
 
@@ -85,6 +96,25 @@ router.post('/', async (req, res) => {
             console.log(error?.message);
         }
     });
+});
+
+router.patch('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const { deliveryStatus } = req.body;
+
+    const updateDoc = {
+        $set: {
+            deliveryStatus: deliveryStatus
+        }
+    };
+
+    try {
+        const result = await Order.findByIdAndUpdate(id, updateDoc);
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.status(500).send(error?.message)
+    }
 });
 
 module.exports = router;
