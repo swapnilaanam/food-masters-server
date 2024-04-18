@@ -54,6 +54,11 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: "Pending"
+    },
+    isRated: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 });
 

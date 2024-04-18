@@ -20,6 +20,17 @@ router.get('/:tranId', async (req, res) => {
     }
 });
 
+router.get('/customer/:email', async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const result = await Order.find({ customerEmail: email });
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.send(error?.message);
+    }
+});
+
 router.get('/restaurant/:restaurantEmail', async (req, res) => {
     const { restaurantEmail } = req.params;
 
@@ -101,13 +112,27 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     const { id } = req.params;
 
-    const { deliveryStatus } = req.body;
+    let updateDoc;
 
-    const updateDoc = {
-        $set: {
-            deliveryStatus: deliveryStatus
-        }
-    };
+    if (req.body.deliveryStatus) {
+        const { deliveryStatus } = req.body;
+
+        updateDoc = {
+            $set: {
+                deliveryStatus: deliveryStatus
+            }
+        };
+    }
+
+    if(req.body.isRated) {
+        const {isRated} = req.body;
+
+        updateDoc = {
+            $set: {
+                isRated: isRated
+            }
+        };
+    }
 
     try {
         const result = await Order.findByIdAndUpdate(id, updateDoc);

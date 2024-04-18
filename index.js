@@ -15,6 +15,7 @@ const vouchersRoute = require('./routes/vouchers');
 const ordersRoute = require('./routes/orders');
 const paymentsRoute = require('./routes/payments');
 const locationsRoute = require('./routes/locations');
+const ratingsRoute = require('./routes/ratings');
 
 // middleware
 app.use(cors());
@@ -35,6 +36,7 @@ app.use('/vouchers', vouchersRoute);
 app.use('/orders', ordersRoute);
 app.use('/payments', paymentsRoute);
 app.use('/locations', locationsRoute);
+app.use('/ratings', ratingsRoute);
 
 app.get('/', (req, res) => {
     res.send('Food Masters Is Running And Delivering Foods.');
