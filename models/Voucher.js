@@ -5,14 +5,25 @@ const voucherSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    discountAmount: {
+    discountPercentage: {
         type: Number,
         required: true
     },
-    expiredDate: {
+    voucherExpiry: {
         type: Date,
         required: true
-
+    },
+    minimumAmount: {
+        type: Number,
+        require: true
+    },
+    restaurantName: {
+        type: String,
+        required: true
+    },
+    restaurantEmail: {
+        type: String,
+        required: true
     }
 });
 

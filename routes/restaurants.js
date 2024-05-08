@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Restaurant = require('../models/Restaurant');
+const verifyJWTMiddleware = require('./../middlewares/verifyJWTMiddleware');
 
 
 router.get('/', async (req, res) => {
@@ -18,7 +19,7 @@ router.get('/:email', async (req, res) => {
         const result = await Restaurant.findOne({ restaurantEmail: email });
         res.status(200).send(result);
     } catch (error) {
-        res.send(error?.message);
+        res.status(error?.status).send(error?.message);
     }
 });
 
@@ -34,7 +35,7 @@ router.get('/restaurant/:id', async (req, res) => {
 });
 
 
-router.post('/', async (req, res) => {
+router.post('/', verifyJWTMiddleware, async (req, res) => {
     const restaurantInfo = req.body;
 
     // console.log(restaurantInfo);
@@ -49,11 +50,9 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/:email', async (req, res) => {
+router.patch('/:email', verifyJWTMiddleware, async (req, res) => {
     const { email } = req.params;
     const { category } = req.body;
-
-    // console.log(req.body);
 
     try {
         const result = await Restaurant.findOne({ restaurantEmail: email });

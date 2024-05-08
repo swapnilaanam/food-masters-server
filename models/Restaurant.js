@@ -7,7 +7,8 @@ const restaurantSchema = new mongoose.Schema({
     },
     restaurantEmail: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     restaurantThumbnail: {
         type: String,

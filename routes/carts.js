@@ -1,15 +1,7 @@
 const express = require('express');
 const Cart = require('../models/Cart');
 const router = express.Router();
-
-router.get('/', async (req, res) => {
-    try {
-        const result = await Cart.find({});
-        return res.status(200).send(result);
-    } catch (error) {
-        console.log(error?.message);
-    }
-});
+const verifyJWTMiddleware = require('./../middlewares/verifyJWTMiddleware');
 
 router.get('/:email', async (req, res) => {
     const { email } = req.params;
@@ -22,7 +14,18 @@ router.get('/:email', async (req, res) => {
     }
 });
 
-router.post('/:email', async (req, res) => {
+router.get('/:email/count', async (req, res) => {
+    const {email} = req.params;
+
+    try {
+        const result = await Cart.findOne({userEmail: email});
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error?.message);
+    }
+});
+
+router.post('/:email', verifyJWTMiddleware, async (req, res) => {
     const { email } = req.params;
     const cartInfo = req.body;
 
@@ -89,7 +92,7 @@ router.post('/:email', async (req, res) => {
     }
 });
 
-router.patch('/:userEmail', async (req, res) => {
+router.patch('/:userEmail', verifyJWTMiddleware, async (req, res) => {
     const { userEmail } = req.params;
     const { actionType, foodId } = req.body;
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const Rating = require('../models/Rating');
+const verifyJWTMiddleware = require('../middlewares/verifyJWTMiddleware');
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', verifyJWTMiddleware, async (req, res) => {
     const { ratingInfo } = req.body;
 
     try {

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Menu = require('../models/Menu');
+const verifyJWTMiddleware = require('./../middlewares/verifyJWTMiddleware');
 
 router.get('/', async(req, res) => {
     try {
@@ -11,7 +12,7 @@ router.get('/', async(req, res) => {
     }
 });
 
-router.get('/:email', async(req, res) => {
+router.get('/:email', verifyJWTMiddleware, async(req, res) => {
     const {email} = req.params;
 
     try {
@@ -22,7 +23,7 @@ router.get('/:email', async(req, res) => {
     }
 });
 
-router.post('/', async(req, res) => {
+router.post('/', verifyJWTMiddleware, async(req, res) => {
     const newFood = req.body;
 
     // console.log(newFood);
@@ -36,7 +37,7 @@ router.post('/', async(req, res) => {
     }
 });
 
-router.patch('/:id', async(req, res) => {
+router.patch('/:id', verifyJWTMiddleware, async(req, res) => {
     const {id} = req.params;
     const editedFood = req.body;
 
@@ -54,7 +55,7 @@ router.patch('/:id', async(req, res) => {
     }
 });
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', verifyJWTMiddleware, async(req, res) => {
     const {id} = req.params;
 
     try {

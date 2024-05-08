@@ -4,6 +4,7 @@ const router = express.Router();
 
 const SSLCommerzPayment = require('sslcommerz-lts');
 const Order = require('../models/Order');
+const verifyJWTMiddleware = require('../middlewares/verifyJWTMiddleware');
 
 const store_id = process.env.SSL_STORE_ID;
 const store_passwd = process.env.SSL_STORE_PASS;
@@ -20,7 +21,7 @@ router.get('/:tranId', async (req, res) => {
     }
 });
 
-router.get('/customer/:email', async (req, res) => {
+router.get('/customer/:email', verifyJWTMiddleware, async (req, res) => {
     const { email } = req.params;
 
     try {
@@ -31,7 +32,7 @@ router.get('/customer/:email', async (req, res) => {
     }
 });
 
-router.get('/restaurant/:restaurantEmail', async (req, res) => {
+router.get('/restaurant/:restaurantEmail', verifyJWTMiddleware, async (req, res) => {
     const { restaurantEmail } = req.params;
 
     try {
@@ -42,7 +43,7 @@ router.get('/restaurant/:restaurantEmail', async (req, res) => {
     }
 });
 
-router.get('/order/:id', async (req, res) => {
+router.get('/order/:id', verifyJWTMiddleware, async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -53,7 +54,7 @@ router.get('/order/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', verifyJWTMiddleware, async (req, res) => {
     const tranId = new ObjectId().toString();
 
     const orderInfo = req.body;
@@ -65,9 +66,9 @@ router.post('/', async (req, res) => {
         total_amount: orderInfo.total,
         currency: 'BDT',
         tran_id: tranId, // use unique tran_id for each api call
-        success_url: `http://localhost:5000/payments/success/${tranId}`,
-        fail_url: `http://localhost:5000/payments/fail/${tranId}`,
-        cancel_url: 'http://localhost:3030/cancel',
+        success_url: `http://localhost:4000/payments/success/${tranId}`,
+        fail_url: `http://localhost:4000/payments/fail/${tranId}`,
+        cancel_url: `http://localhost:4000/payments/cancel/${tranId}`,
         ipn_url: 'http://localhost:3030/ipn',
         shipping_method: 'Courier',
         product_name: 'Food Item.',
@@ -109,7 +110,7 @@ router.post('/', async (req, res) => {
     });
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', verifyJWTMiddleware, async (req, res) => {
     const { id } = req.params;
 
     let updateDoc;
@@ -124,8 +125,8 @@ router.patch('/:id', async (req, res) => {
         };
     }
 
-    if(req.body.isRated) {
-        const {isRated} = req.body;
+    if (req.body.isRated) {
+        const { isRated } = req.body;
 
         updateDoc = {
             $set: {

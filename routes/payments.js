@@ -28,7 +28,7 @@ router.post('/success/:tranId', async (req, res) => {
             const result = await Order.findByIdAndUpdate(singleOrder._id, updateDoc);
 
             if (result) {
-                res.redirect(`http://localhost:3000/payments/success/${tranId}`);
+                res.redirect(`http://localhost:3000/payments/success/${singleOrder?._id}`);
             }
         }
     } catch (error) {
@@ -44,10 +44,24 @@ router.post(`/fail/:tranId`, async (req, res) => {
         const result = await Order.findOneAndDelete({transactionId: tranId});
         
         if(result) {
-            res.redirect(`http://localhost:3000/payments/fail/${tranId}`);
+            res.redirect(`http://localhost:3000/payments/fail`);
         }
     } catch (error) {
         return res.status(500).send(error?.message);
+    }
+});
+
+router.post(`/cancel/:tranId`, async (req, res) => {
+    const { tranId } = req.params;
+
+    try {
+        const result = await Order.findOneAndDelete({transactionId: tranId});
+
+        if(result) {
+            res.redirect(`http://localhost:3000/payments/cancel`)
+        }
+    } catch (error) {
+        console.log(error?.message);
     }
 });
 

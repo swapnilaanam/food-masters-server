@@ -16,13 +16,10 @@ router.get('/:email', async (req, res) => {
 
     try {
         const result = await User.findOne({ email: email });
-        if (!result) {
-            return res.status(404).send("User Not Found!");
-        }
 
         return res.status(200).send(result);
     } catch (error) {
-
+        return res.status(error?.status).send(error?.message);
     }
 });
 

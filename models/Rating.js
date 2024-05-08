@@ -33,6 +33,10 @@ const ratingSchema = mongoose.Schema({
     rating: {
         type: Number,
         required: true
+    },
+    feedbackText: {
+        type: String,
+        required: true
     }
 });
 
