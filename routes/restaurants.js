@@ -5,11 +5,26 @@ const verifyJWTMiddleware = require('./../middlewares/verifyJWTMiddleware');
 
 
 router.get('/', async (req, res) => {
-    try {
-        const result = await Restaurant.find({});
-        res.status(200).send(result);
-    } catch (error) {
-        res.status(error?.status).send(error?.message);
+    const { search } = req.query;
+
+    if (search) {
+        const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp('^' + escapedSearch, 'i');
+
+        try {
+            const result = await Restaurant.find({ restaurantName: { $regex: regex } });
+            res.status(200).send(result);
+        } catch (error) {
+            res.status(error?.status).send(error?.message);
+        }
+    }
+    else {
+        try {
+            const result = await Restaurant.find({});
+            res.status(200).send(result);
+        } catch (error) {
+            res.status(error?.status).send(error?.message);
+        }
     }
 });
 
